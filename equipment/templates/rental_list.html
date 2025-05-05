@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rental Records</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+    :root {
+      --yellow: #FFD700;
+      --dark-blue: #141e30;
+      --mid-blue: #243b55;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, var(--dark-blue), var(--mid-blue));
+      color: #f0f0f0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: rgba(27, 39, 53, 0.95);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 15px;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      color: var(--yellow);
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 120px auto 50px;
+      background: var(--glass-bg);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--yellow);
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--yellow);
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .returned {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .resolved {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .pending {
+      background-color: #e67e22;
+      color: white;
+    }
+
+    .no-logs {
+      text-align: center;
+      color: #ccc;
+      padding: 30px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: rgba(27, 39, 53, 0.95);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.3s ease;
+      }
+
+      .nav-links a {
+        color: white;
+        margin: 10px 0;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div style="font-weight: 600; color: var(--yellow); font-size: 20px;">🏀 Sports Hub</div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <div class="nav-links" id="navLinks">
+          <a href="{% url 'homepage' %}">Home</a>
+          <a href="{% url 'equipment_list' %}">Equipment</a>
+          <a href="{% url 'rental_list' %}">Rental</a>
+          <a href="{% url 'maintenance_list' %}">Maintenance</a>
+        </div>
+      </div>
+
+  <div class="container">
+    <h2>🏅 Rental Records 🏅</h2>
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>👤 User</th>
+            <th>🎽 Equipment</th>
+            <th>📅 Rental Date</th>
+            <th>📦 Return Date</th>
+            <th>📊 Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rental in rentals %}
+          <tr>
+            <td>{{ rental.user_name }}</td>
+            <td>{{ rental.equipment.name }}</td>
+            <td>{{ rental.rental_date }}</td>
+            <td>{{ rental.return_date|default:"N/A" }}</td>
+            <td>
+              {% if rental.return_date %}
+              <span class="badge returned">✔️ Returned</span>
+              {% else %}
+              <span class="badge pending">⏳ Pending</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="no-records">No rental records available at the moment.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById("navLinks");
+      navLinks.classList.toggle("show");
+    }
+  </script>
+
+</body>
+</html>

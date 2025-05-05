@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Equipment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0F2027, #203A43, #2C5364);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: #1B2735;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar img {
+            height: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        h1 {
+            margin-top: 120px;
+            font-size: 36px;
+            text-align: center;
+            color: #FFD700;
+        }
+
+        /* Equipment Grid */
+        .equipment-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .equipment-card {
+            background: #1B2735;
+            padding: 25px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .equipment-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .equipment-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .equipment-card p {
+            font-size: 18px;
+            font-weight: 500;
+            color: #f0f0f0;
+        }
+
+        /* Responsive Nav */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: #1B2735;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                width: 180px;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 10px 0;
+                border-bottom: 1px solid #333;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div style="font-weight: 600; color: var(--yellow); font-size: 20px;">🏀 Sports Hub</div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <div class="nav-links" id="navLinks">
+          <a href="{% url 'homepage' %}">Home</a>
+          <a href="{% url 'equipment_list' %}">Equipment</a>
+          <a href="{% url 'rental_list' %}">Rental</a>
+          <a href="{% url 'maintenance_list' %}">Maintenance</a>
+        </div>
+      </div>
+
+    <!-- Header -->
+    <h1>🏆 Sports Equipment List</h1>
+
+    <!-- Equipment Cards -->
+    <div class="equipment-container">
+        {% for equipment in equipments %}
+            <div class="equipment-card">
+                <h3>{{ equipment.name }}</h3>
+                <p>Available: {{ equipment.available_quantity }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Toggle Script -->
+    <script>
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("show");
+        }
+    </script>
+</body>
+</html>

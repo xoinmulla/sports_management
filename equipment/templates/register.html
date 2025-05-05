@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e7e8d, #4CAF50);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+            transition: all 0.3s ease;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-container input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+        }
+        .form-container button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .password-strength {
+            margin: 8px 0;
+            height: 8px;
+            width: 100%;
+            border-radius: 6px;
+            background-color: #ddd;
+        }
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+        @media (max-width: 600px) {
+            .form-container {
+                width: 85%;
+            }
+        }
+
+  
+      :root {
+        --yellow: #FFD700;
+        --bg-dark: #0F2027;
+        --bg-mid: #203A43;
+        --bg-light: #2C5364;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+      }
+    
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+    
+      body {
+        background: linear-gradient(135deg, var(--bg-dark), var(--bg-mid), var(--bg-light));
+        color: white;
+        scroll-behavior: smooth;
+      }
+    
+      /* Navbar */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        background: rgba(27, 39, 53, 0.95);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        transition: background 0.3s ease;
+      }
+    
+      .navbar img {
+        height: 50px;
+      }
+    
+      .nav-links {
+        display: flex;
+        gap: 24px;
+      }
+    
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+    
+      .nav-links a:hover {
+        color: var(--yellow);
+      }
+    
+      .menu-toggle {
+        display: none;
+        font-size: 28px;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+    
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: url('https://source.unsplash.com/1600x900/?sports,stadium') no-repeat center center/cover;
+        position: relative;
+      }
+    
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+      }
+    
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 40px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border-radius: 16px;
+        max-width: 800px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        animation: fadeIn 1.2s ease;
+      }
+    
+      .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--yellow);
+      }
+    
+      .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #f0f0f0;
+      }
+    
+      .cta-button {
+        background: var(--yellow);
+        color: #333;
+        padding: 14px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: transform 0.3s ease, background 0.3s ease;
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+      }
+    
+      .cta-button:hover {
+        background: #ffcc00;
+        transform: translateY(-2px);
+      }
+    
+      /* Features Section */
+      .features {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 100px 20px;
+      }
+    
+      .feature-card {
+        background: var(--glass-bg);
+        padding: 30px;
+        border-radius: 16px;
+        max-width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(12px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+    
+      .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 28px rgba(255, 215, 0, 0.2);
+      }
+    
+      .feature-card img {
+        width: 60px;
+        margin-bottom: 15px;
+      }
+    
+      .feature-card h3 {
+        color: var(--yellow);
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+    
+      .feature-card p {
+        font-size: 15px;
+        color: #ddd;
+      }
+    
+      /* Animations */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    
+      /* Responsive */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
+        }
+    
+        .nav-links {
+          position: absolute;
+          top: 65px;
+          right: 20px;
+          background: #1B2735;
+          flex-direction: column;
+          width: 200px;
+          border-radius: 12px;
+          display: none;
+          padding: 20px;
+          animation: fadeIn 0.5s ease;
+        }
+    
+        .nav-links a {
+          color: white;
+          padding: 10px 0;
+          border-bottom: 1px solid #333;
+        }
+    
+        .nav-links.show {
+          display: flex;
+        }
+    
+        .hero-content h1 {
+          font-size: 2.2rem;
+        }
+    
+        .hero-content p {
+          font-size: 1rem;
+        }
+    
+        .cta-button {
+          padding: 12px 24px;
+          font-size: 16px;
+        }
+      }
+    </style>
+</head>
+<body>
+  
+    <div class="form-container">
+        <h2>Register</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error-message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <input type="text" name="fname" placeholder="First Name" required><br>
+            <input type="text" name="lname" placeholder="Last Name" required><br>
+            <input type="text" name="uname" placeholder="Username" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
+            
+            <!-- Password Field with Real-Time Validation -->
+            <input type="password" name="password" id="password" placeholder="Password" required 
+                pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+                title="Password must be at least 8 characters long and contain both letters and numbers."><br>
+            
+            <!-- Password Strength Indicator -->
+            <div id="password-strength" class="password-strength">
+                <div id="password-strength-bar" class="password-strength-bar"></div>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p class="success-message">{% if success_message %}{{ success_message }}{% endif %}</p>
+    </div>
+
+    <script>
+        // Dynamic Password Strength Indicator
+        const passwordInput = document.getElementById('password');
+        const passwordStrengthBar = document.getElementById('password-strength-bar');
+
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+            let strength = 0;
+
+            // Checking password strength
+            if (password.length >= 8) {
+                strength += 1;
+                if (/[A-Za-z]/.test(password)) strength += 1;
+                if (/\d/.test(password)) strength += 1;
+            }
+
+            // Adjusting the password strength bar based on the strength
+            if (strength === 1) {
+                passwordStrengthBar.style.width = '33%';
+                passwordStrengthBar.style.backgroundColor = 'red';
+            } else if (strength === 2) {
+                passwordStrengthBar.style.width = '66%';
+                passwordStrengthBar.style.backgroundColor = 'orange';
+            } else if (strength === 3) {
+                passwordStrengthBar.style.width = '100%';
+                passwordStrengthBar.style.backgroundColor = 'green';
+            } else {
+                passwordStrengthBar.style.width = '0';
+            }
+        });
+    </script>
+</body>
+</html>
